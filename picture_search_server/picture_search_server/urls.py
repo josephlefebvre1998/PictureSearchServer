@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from rest_framework.urlpatterns import format_suffix_patterns
+import server.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^img_searches/$', views.ImgSearches.as_view()),
+    url(r'^img_searches/(?P<pk>[0-9]+)/$', views.ImgSearch.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
