@@ -25,7 +25,7 @@ SECRET_KEY = 'yofloxrimw+o(t=_j$!$gk@lo-1$6fm@hq*n80^4o)2(+9p&)_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['josephlefebvre1998.pythonanywhere.com']
 
 
 # Application definition
