@@ -6,8 +6,8 @@ import numpy as np
 
 vgg_model = VGG16(weights='imagenet', include_top=True)
 
-img_path = 'elephant.jpg'
-image = image.load_img(img_path, target_size=(224, 224))
+img_path = '20180809_130409.jpg'
+image_load = image.load_img(img_path, target_size=(224, 224))
 
 
 def predict(img):
@@ -20,4 +20,4 @@ def predict(img):
     return result
 
 
-print(predict(image))
+print(predict(image_load))
