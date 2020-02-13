@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: python picture_search_server/manage.py runserver
