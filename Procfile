@@ -1,1 +1,1 @@
-web: python picture_search_server/manage.py collectstatic --noinput; bin/gunicorn_django --workers=4 --bind=0.0.0.0:$PORT picture_search_server/picture_search_server/settings.py
+web: python manage.py runserver
