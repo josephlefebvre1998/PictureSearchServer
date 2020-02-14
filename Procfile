@@ -1,1 +1,1 @@
-web: python manage.py run_gunicorn
+web: python picture_search_server/manage.py run_gunicorn
