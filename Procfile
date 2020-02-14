@@ -1,1 +1,1 @@
-web: python picture_search_server/manage.py run_gunicorn
+web: gunicorn picture_search_server/picture_search_server.wsgi --log-file -
