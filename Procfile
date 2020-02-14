@@ -1,1 +1,1 @@
-web: gunicorn picture_search_server/picture_search_server.wsgi --log-file -
+web: gunicorn --chdir ./picture_search_server picture_search_server.wsgi --log-file -
