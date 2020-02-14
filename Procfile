@@ -1,1 +1,1 @@
-web: gunicorn deep-fashion-server.wsgi --log-file -
+web: gunicorn picture_search_server/wsgi.py --log-file -
