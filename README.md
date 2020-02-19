@@ -43,3 +43,9 @@ $ python manage.py makemigrations
 
 $ python manage.py migrate --run-syncdb
 ```
+# Heroku migration :
+```
+$ heroku login
+
+$ heroku run python picture_search_server/manage.py migrate -a deep-fashion-server
+```
