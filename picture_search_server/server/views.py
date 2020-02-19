@@ -5,6 +5,8 @@ from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from process import searchVGG
 from keras.preprocessing import image
+from django.contrib.sites.shortcuts import get_current_site
+
 
 import os
 
@@ -37,9 +39,10 @@ class ImgSearches(APIView):
             img_search_object.client = data["client"]
             img_search_object.save()
             print(results)
-            for image_id, label, score in results[0]:
-                res = Results(label=label, score=score,
-                              url="http://www.image-net.org/api/text/imagenet.synset.geturls?wnid=" + image_id)
+            for result in results:
+                elmts = result.decode().split("/")
+                res = Results(label=elmts[2], score=0,
+                              url=result)
                 res.save()
                 img_search_object.results.add(res)
 
@@ -48,8 +51,7 @@ class ImgSearches(APIView):
             # if serializer.is_valid():
             if True:
                 response = Response(status=status.HTTP_201_CREATED)
-                # response['location'] = "http://127.0.0.1:8000/img_searches/" + str(img_search_object.pk)
-                response['location'] = img_search_object.get_absolute_url()
+                response['location'] = "http://"+get_current_site(request).domain+img_search_object.get_absolute_url()
                 return response
             # errors = serializer.errors
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)

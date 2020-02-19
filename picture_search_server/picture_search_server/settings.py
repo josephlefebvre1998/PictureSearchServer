@@ -46,15 +46,15 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    # 'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.runserver_nostatic',
-    'django.contrib.staticfiles',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'whitenoise.runserver_nostatic',
+    # 'django.contrib.staticfiles',
 ]
 
 ROOT_URLCONF = 'picture_search_server.urls'

@@ -15,10 +15,8 @@ class ImgSearchObject(models.Model):
     client = models.CharField(max_length=100, blank=True, default='')
     results = models.ManyToManyField(Results)
 
-    # def get_absolute_url(self):
-    #     return "/imh_searches/%i/" % self.pk
     def get_absolute_url(self):
-        return reverse('author-detail', kwargs={'pk': self.pk})
+        return reverse('img_searches_single', kwargs={'pk': self.pk})
 
     class Meta:
         ordering = ('date',)

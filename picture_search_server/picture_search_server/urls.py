@@ -21,8 +21,8 @@ import server.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^img_searches/$', views.ImgSearches.as_view()),
-    url(r'^img_searches/(?P<pk>[0-9]+)/$', views.ImgSearch.as_view()),
+    url(r'^img_searches/$', views.ImgSearches.as_view(), name='img_searches_list'),
+    url(r'^img_searches/(?P<pk>[0-9]+)/$', views.ImgSearch.as_view(), name='img_searches_single'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
