@@ -47,5 +47,7 @@ $ python manage.py migrate --run-syncdb
 ```
 $ heroku login
 
-$ heroku run python picture_search_server/manage.py migrate -a deep-fashion-server
+$ heroku run bash -a deep-fashion-server
+
+$ python manage.py migrate --run-syncdb
 ```
