@@ -16,7 +16,7 @@ def model_load():
     # # model.summary()
     # print("load success")
     # return model
-    h5f = h5py.File(os.path.normpath(os.path.join(os.getcwd(), "./models/featureCNN.h5")), 'r')
+    h5f = h5py.File(os.path.normpath(os.path.join(os.getcwd(), "./picture_search_server/models/featureCNN.h5")), 'r')
     feats = h5f['dataset_feat'][:]
     img_names = h5f['dataset_name'][:]
     h5f.close()
