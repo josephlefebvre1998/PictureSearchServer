@@ -32,10 +32,10 @@ def predict(img, max_res=3):
     scores = np.dot(queryVec, feats.T)
     rank_ID = np.argsort(scores)[::-1]
     rank_score = scores[rank_ID]
-    # print(rank_score)
+    print(rank_score)
 
     # number of top retrieved images to show
-    imlist = [images[index] for i, index in enumerate(rank_ID[0:max_res])]
+    imlist = [(images[index], rank_score[i])for i, index in enumerate(rank_ID[0:max_res])]
     return imlist
 
 

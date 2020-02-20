@@ -45,13 +45,15 @@ class ImgSearches(APIView):
 
             # Predict results
             results = searchVGG.predict(img_to_process, max_res=3)
+            print(results)
 
             # Save results
-            for result in results:
+            for result,score in results:
+
                 elmts = result.decode().split("/")
                 result = result.decode()
                 result = result.replace("i", "I", 1)
-                res = Results(label=elmts[2], score=0,
+                res = Results(label=elmts[2], score=score,
                               url=result)
                 res.save()
                 img_search_object.results.add(res)
