@@ -25,8 +25,9 @@ class ImgSearches(APIView):
         # if len(data) is not 0:
         if True:
             # Load request image
-            img = data["image"]
-            if img is None:
+            try:
+                img = data["image"]
+            except KeyError :
                 img = os.path.normpath(os.path.join(os.getcwd(), "./tests_images/elephant.jpg"))
             # Set request date
             date_hour = datetime.datetime.now()
