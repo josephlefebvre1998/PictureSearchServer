@@ -20,15 +20,12 @@ from server.serializers import ImgSearchSerializer
 class ImgSearches(APIView):
 
     def post(self, request):
-        errors = {"error": "body must not be empty"}
+        errors = {"error": "Image must not be empty"}
         data = request.data
         # if len(data) is not 0:
-        if True:
-            # Load request image
-            try:
-                img = data["image"]
-            except KeyError :
-                img = os.path.normpath(os.path.join(os.getcwd(), "./tests_images/elephant.jpg"))
+        try:
+            img = data["image"]
+
             # Set request date
             date_hour = datetime.datetime.now()
             date = date_hour.strftime('%Y-%m-%d %H:%M:%S')
@@ -63,7 +60,8 @@ class ImgSearches(APIView):
                 response = Response(status=status.HTTP_201_CREATED)
                 response['location'] = "http://"+get_current_site(request).domain+img_search_object.get_absolute_url()
                 return response
-            # return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+        except KeyError:
+            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         img_searches = ImgSearchObject.objects.all()
