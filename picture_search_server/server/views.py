@@ -9,6 +9,7 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 import os
+import datetime
 
 from server.models import Results
 from server.models import ImgSearchObject
@@ -19,42 +20,47 @@ from server.serializers import ImgSearchSerializer
 class ImgSearches(APIView):
 
     def post(self, request):
-        # searchVGG.predict_test()
         errors = {"error": "body must not be empty"}
         data = request.data
         # if len(data) is not 0:
         if True:
-            # print(data["date"])
-            img_path = os.path.normpath(os.path.join(os.getcwd(), "./tests_images/elephant.jpg"))
+            # Load request image
+            img = data["image"]
+            if img is None:
+                img = os.path.normpath(os.path.join(os.getcwd(), "./tests_images/elephant.jpg"))
+            # Set request date
+            date_hour = datetime.datetime.now()
+            date = date_hour.strftime('%Y-%m-%d %H:%M:%S')
 
-            image_load = image.load_img(img_path, target_size=(150, 150))
-            results = searchVGG.predict(image_load)
-            data["image"] = img_path
-            data["date"] = "2020-01-01T10:10"
-            data["client"] = "AndroidFront"
-            # serializer = ImgSearchSerializer(data=data)
-            img_search_object = ImgSearchObject()
-            img_search_object.image = data["image"]
-            img_search_object.date = data["date"]
-            img_search_object.client = data["client"]
+            # Set request client
+            client = request.META['HTTP_USER_AGENT']
+
+            # Create entity
+            img_search_object = ImgSearchObject.objects.create(date=date, client=client, image=img)
+
+            # Save entity
             img_search_object.save()
-            print(results)
+
+            img_to_process = image.load_img(img_search_object.image, target_size=(150, 150))
+
+            # Predict results
+            results = searchVGG.predict(img_to_process, max_res=3)
+
+            # Save results
             for result in results:
                 elmts = result.decode().split("/")
+                result = result.decode()
+                result = result.replace("i", "I", 1)
                 res = Results(label=elmts[2], score=0,
                               url=result)
                 res.save()
                 img_search_object.results.add(res)
 
-            # img_search_object.results.set(results)
-            # serializer = ImgSearchSerializer(data=data)
-            # if serializer.is_valid():
             if True:
                 response = Response(status=status.HTTP_201_CREATED)
                 response['location'] = "http://"+get_current_site(request).domain+img_search_object.get_absolute_url()
                 return response
-            # errors = serializer.errors
-        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+            # return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         img_searches = ImgSearchObject.objects.all()
