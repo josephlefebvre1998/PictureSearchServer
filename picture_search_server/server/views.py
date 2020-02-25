@@ -42,7 +42,7 @@ class ImgSearches(APIView):
             img_to_process = image.load_img(img_search_object.image, target_size=(150, 150))
 
             # predict_results(img_to_process,img_search_object)
-            results = searchVGG.predict(img_to_process, max_res)
+            results = searchVGG.predict(img_to_process, max_res=3)
             print(results)
 
             # Save results
