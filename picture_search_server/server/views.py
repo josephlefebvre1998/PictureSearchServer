@@ -41,25 +41,12 @@ class ImgSearches(APIView):
 
             img_to_process = image.load_img(img_search_object.image, target_size=(150, 150))
 
-            # Predict results
-            results = searchVGG.predict(img_to_process, max_res=3)
-            print(results)
+            predict_results(img_to_process,img_search_object)
 
-            # Save results
-            for result,score in results:
+            response = Response(status=status.HTTP_201_CREATED)
+            response['location'] = "http://"+get_current_site(request).domain+img_search_object.get_absolute_url()
+            return response
 
-                elmts = result.decode().split("/")
-                result = result.decode()
-                result = result.replace("i", "I", 1)
-                res = Results(label=elmts[2], score=score,
-                              url=result)
-                res.save()
-                img_search_object.results.add(res)
-
-            if True:
-                response = Response(status=status.HTTP_201_CREATED)
-                response['location'] = "http://"+get_current_site(request).domain+img_search_object.get_absolute_url()
-                return response
         except KeyError:
             return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -68,6 +55,21 @@ class ImgSearches(APIView):
         serializer = ImgSearchSerializer(img_searches, many=True)
         return Response(serializer.data)
 
+    def predict_results(img_to_process,img_search_object,max_res=3):
+        # Predict results
+        results = searchVGG.predict(img_to_process, max_res)
+        print(results)
+
+        # Save results
+        for result,score in results:
+
+            elmts = result.decode().split("/")
+            result = result.decode()
+            result = result.replace("i", "I", 1)
+            res = Results(label=elmts[2], score=score,
+                            url=result)
+            res.save()
+            img_search_object.results.add(res)
 
 class ImgSearch(APIView):
 
