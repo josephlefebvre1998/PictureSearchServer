@@ -1,7 +1,5 @@
 # !rm -rf ./In-shop-Clothes-From-Deepfashion/
-!git
-clone
-https: // github.com / aryapei / In - shop - Clothes - From - Deepfashion.git
+# !git clone https: // github.com / aryapei / In - shop - Clothes - From - Deepfashion.git
 # !rsync -a ./In-shop-Clothes-From-Deepfashion/Img/MEN/ ./In-shop-Clothes-From-Deepfashion/Img/WOMEN/
 
 
