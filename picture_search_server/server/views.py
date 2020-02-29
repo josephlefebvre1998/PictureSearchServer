@@ -25,6 +25,10 @@ class ImgSearches(APIView):
         # if len(data) is not 0:
         try:
             img = data["image"]
+            try:
+                max_res = int(data["max_res"])
+            except KeyError:
+                max_res = 3
 
             # Set request date
             date_hour = datetime.datetime.now()
@@ -42,7 +46,7 @@ class ImgSearches(APIView):
             img_to_process = image.load_img(img_search_object.image, target_size=(150, 150))
 
             # Predict results
-            results = searchVGG.predict(img_to_process, max_res=3)
+            results = searchVGG.predict(img_to_process, max_res=max_res)
             print(results)
 
             # Save results
