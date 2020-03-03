@@ -2,9 +2,9 @@
 import numpy as np
 from numpy import linalg as LA
 
-from keras.applications.vgg16 import VGG16
+from keras.applications.vgg19 import VGG19
 from keras.preprocessing import image
-from keras.applications.vgg16 import preprocess_input
+from keras.applications.vgg19 import preprocess_input
 
 
 class VGGNet:
@@ -12,11 +12,11 @@ class VGGNet:
         self.input_shape = (150, 150, 3)
         self.weight = 'imagenet'
         self.pooling = 'max'
-        self.model = VGG16(weights=self.weight, input_shape=(self.input_shape[0], self.input_shape[1], self.input_shape[2]), pooling=self.pooling, include_top=False)
+        self.model = VGG19(weights=self.weight, input_shape=(self.input_shape[0], self.input_shape[1], self.input_shape[2]), pooling=self.pooling, include_top=False)
         self.model.predict(np.zeros((1, 150, 150, 3)))
 
     '''
-    Use vgg16 model to extract features
+    Use vgg19 model to extract features
     Output normalized feature vector
     '''
     def extract_feat_path(self, img_path):

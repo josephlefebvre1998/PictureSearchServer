@@ -55,6 +55,19 @@ def get_imlist(path):
     return [os.path.join(path, f) for f in os.listdir(path) if f.endswith('.jpg')]
 
 
+def get_img_list_all():
+    img_list_all = []
+    f = open("/content/In-shop-Clothes-From-Deepfashion/Eval/list_eval_partition.txt", "r")
+    nb_lines = int(f.readline())
+    f.readline()
+    for i in range(0, nb_lines):
+        txt = f.readline()
+        x = txt.split()
+        img_list_all.append(x[0])
+    f.close()
+    return img_list_all
+
+
 def get_img_list_train():
     img_list_train = []
     f = open("/content/In-shop-Clothes-From-Deepfashion/Eval/list_eval_partition.txt", "r")
@@ -69,10 +82,24 @@ def get_img_list_train():
     return img_list_train
 
 
+def get_img_list_test():
+    img_list_test = []
+    f = open("/content/In-shop-Clothes-From-Deepfashion/Eval/list_eval_partition.txt", "r")
+    nb_lines = int(f.readline())
+    f.readline()
+    for i in range(0, nb_lines):
+        txt = f.readline()
+        x = txt.split()
+        if x[2] == "query":
+            img_list_test.append(x[0])
+    f.close()
+    return img_list_test
+
+
 if __name__ == "__main__":
 
     db = img_paths = '/content/In-Shop-Clothes-From-Deepfashion/'
-    img_list = get_img_list_train()
+    img_list = get_img_list_all()
 
     print("--------------------------------------------------")
     print("         feature extraction starts")
@@ -83,6 +110,7 @@ if __name__ == "__main__":
 
     model = VGGNet()
     for i, img_path in enumerate(img_list):
+        img_path = img_path.replace("i", "I", 1)
         try:
             norm_feat = model.extract_feat("/content/In-shop-Clothes-From-Deepfashion/" + img_path)
             img_name = img_path
@@ -106,4 +134,3 @@ if __name__ == "__main__":
     h5f.create_dataset('dataset_name', data=names)
     print("model saved")
     h5f.close()
-
