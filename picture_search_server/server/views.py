@@ -54,7 +54,7 @@ class ImgSearches(APIView):
 
                 elmts = result.decode().split("/")
                 result = result.decode()
-                result = result.replace("i", "I", 1)
+                # result = result.replace("i", "I", 1)
                 res = Results(label=elmts[2], score=score,
                               url=result)
                 res.save()
