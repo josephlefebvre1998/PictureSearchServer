@@ -35,7 +35,7 @@ pycparser==2.19
 python-libmagic==0.4.0
 python-magic==0.4.15
 pytz==2019.3
-PyYAML==5.3
+PyYAML==5.4
 requests==2.22.0
 requests-oauthlib==1.3.0
 rsa==4.0
